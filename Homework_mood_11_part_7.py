@@ -1,25 +1,46 @@
-# Завдання 2
-# Створіть клас температурного датчика, де обмежується
-# температура в межах прийнятних для датчика значень, за
-# допомогою property().
-class TemperatureSensor:
-    def __init__(self):
-        self._temperature = 0
+# Завдання 3
+#  Завдання для функторів. Створіть клас TextModifier,
+# який може здійснювати різні операції над текстом:
+# • Операція перетворення тексту у верхній регістр.
+# • Операція перетворення тексту у нижній регістр.
+# • Операція видалення пробілів у тексті.
+# • Операція шифрування тексту за допомогою зсуву
+# вліво на задану кількість символів.
 
-    @property
-    def temperature(self):
-        return self._temperature
+class TextModifier:
+    def __init__(self, text):
+        self.text = text
 
-    @temperature.setter
-    def temperature(self, value):
-        if -50 <= value <= 150:
-            self._temperature = value
-        else:
-            print("Error: Temperature out of range. Please provide a temperature between -50°C and 150°C.")
+    def to_upper(self):
+        self.text = self.text.upper()
 
-sensor = TemperatureSensor()
+    def to_lower(self):
+        self.text = self.text.lower()
 
-sensor.temperature = 25
-print("Current temperature:", sensor.temperature)
+    def remove_spaces(self):
+        self.text = self.text.replace(" ", "")
 
-sensor.temperature = 200
+    def encrypt(self, shift):
+        encrypted_text = ""
+        for char in self.text:
+            if char.isalpha():
+                shifted_char = chr(((ord(char) - 97 + shift) % 26) + 97) if char.islower() else chr(((ord(char) - 65 + shift) % 26) + 65)
+                encrypted_text += shifted_char
+            else:
+                encrypted_text += char
+        self.text = encrypted_text
+
+
+modifier = TextModifier("Hello, World!")
+
+modifier.to_upper()
+print("Text in uppercase:", modifier.text)
+
+modifier.to_lower()
+print("Text in lowercase:", modifier.text)
+
+modifier.remove_spaces()
+print("Text without spaces:", modifier.text)
+
+modifier.encrypt(3)
+print("Encrypted text:", modifier.text)
