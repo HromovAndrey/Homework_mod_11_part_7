@@ -1,40 +1,25 @@
-# Завдання 1
-# Іноді ви можете використати property() для створення
-# доступу до атрибутів через геттери та сеттери для
-# забезпечення певних перевірок або операцій перед
-# отриманням або зміною атрибутів. Створіть клас для
-# роботи з банківським рахунком, щоб гроші знялися або
-# зарахувалися тільки при виконанні певних умов
-# (наприклад, якщо гроші на рахунку є).
-class BankAccount:
-    def __init__(self, balance=0):
-        self._balance = balance
+# Завдання 2
+# Створіть клас температурного датчика, де обмежується
+# температура в межах прийнятних для датчика значень, за
+# допомогою property().
+class TemperatureSensor:
+    def __init__(self):
+        self._temperature = 0
 
     @property
-    def balance(self):
-        return self._balance
+    def temperature(self):
+        return self._temperature
 
-    def deposit(self, amount):
-        if amount > 0:
-            self._balance += amount
-            print(f"Deposited {amount}$. Current balance: {self._balance}$")
+    @temperature.setter
+    def temperature(self, value):
+        if -50 <= value <= 150:
+            self._temperature = value
         else:
-            print("Invalid amount for deposit. Please provide a positive value.")
+            print("Error: Temperature out of range. Please provide a temperature between -50°C and 150°C.")
 
-    def withdraw(self, amount):
-        if amount > 0:
-            if self._balance >= amount:
-                self._balance -= amount
-                print(f"Withdrew {amount}$. Current balance: {self._balance}$")
-            else:
-                print("Insufficient funds.")
-        else:
-            print("Invalid amount for withdrawal. Please provide a positive value.")
+sensor = TemperatureSensor()
 
-account = BankAccount(100)
+sensor.temperature = 25
+print("Current temperature:", sensor.temperature)
 
-print("Current balance:", account.balance)
-
-account.deposit(50)
-account.withdraw(30)
-account.withdraw(200)
+sensor.temperature = 200
